@@ -1,4 +1,4 @@
-package com.learning.microservices.product.service;
+package com.learning.microservices.product.service.product;
 
 
 import com.learning.microservices.product.dto.product.create.CreateProductOperation;
@@ -18,12 +18,16 @@ public class CreateProductService implements CreateProductOperation {
     @Override
     public CreateProductResponse process(CreateProductRequest request) {
         Product product = Product.builder()
-                .id(request.id())
                 .description(request.description())
                 .name(request.name())
                 .price(request.price())
                 .build();
         productRepository.save(product);
-        return new CreateProductResponse("Product created");
+        return new CreateProductResponse(
+                "Product created",
+                product.getId(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice().toString());
     }
 }
